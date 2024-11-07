@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "name": "ROOT",
+      "path": "../",
+    },
+    {
+      "name": "apps/server",
+      "path": "../apps/server",
+    },
+    {
+      "name": "packages/config-eslint",
+      "path": "../packages/config-eslint",
+    },
+    {
+      "name": "packages/config-tailwind",
+      "path": "../packages/config-tailwind",
+    },
+    {
+      "name": "packages/config-typescript",
+      "path": "../packages/config-typescript",
+    },
+  ],
+  "settings": {
+    "files.exclude": {
+      "node_modules/": true,
+      "packages/": true,
+      "apps/": true,
+      "crates/": true,
+    },
+    "files.associations": {
+      "*.css": "tailwindcss",
+    },
+  },
+}
