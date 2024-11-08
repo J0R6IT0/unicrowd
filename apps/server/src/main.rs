@@ -1,8 +1,12 @@
 use actix_web::{middleware::Logger, App, HttpServer};
 use api::endpoints::get_ticket;
+use core::database;
 use std::io::Result;
 
-mod api;
+pub mod api;
+pub mod core;
+pub mod models;
+pub mod schema;
 
 #[actix_web::main]
 async fn main() -> Result<()> {
@@ -10,6 +14,7 @@ async fn main() -> Result<()> {
         std::env::set_var("RUST_LOG", "actix_web=info");
     }
     env_logger::init();
+    database::init_db().await;
 
     HttpServer::new(move || App::new().service(get_ticket).wrap(Logger::default()))
         .bind(("127.0.0.1", 8000))?
