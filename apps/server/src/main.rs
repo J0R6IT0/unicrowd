@@ -1,5 +1,5 @@
 use actix_web::{middleware::Logger, App, HttpServer};
-use api::endpoints::get_ticket;
+use api::endpoints::{get_ticket, validate_ticket};
 use core::database;
 use std::io::Result;
 
@@ -16,8 +16,13 @@ async fn main() -> Result<()> {
     env_logger::init();
     database::init_db().await;
 
-    HttpServer::new(move || App::new().service(get_ticket).wrap(Logger::default()))
-        .bind(("127.0.0.1", 8000))?
-        .run()
-        .await
+    HttpServer::new(move || {
+        App::new()
+            .service(get_ticket)
+            .service(validate_ticket)
+            .wrap(Logger::default())
+    })
+    .bind(("127.0.0.1", 8000))?
+    .run()
+    .await
 }

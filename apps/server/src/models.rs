@@ -1,3 +1,4 @@
+use crate::schema::tickets::dsl::*;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -23,9 +24,24 @@ pub struct Ticket {
 }
 
 impl Ticket {
-    pub fn insert(&self, conn: &mut SqliteConnection) -> QueryResult<usize> {
+    pub fn insert(&self, connection: &mut SqliteConnection) -> QueryResult<usize> {
         diesel::insert_into(crate::schema::tickets::table)
             .values(self)
-            .execute(conn)
+            .execute(connection)
+    }
+
+    pub fn update(&self, connection: &mut SqliteConnection) -> QueryResult<usize> {
+        diesel::update(tickets)
+            .filter(ticket.eq(&self.ticket))
+            .set(self)
+            .execute(connection)
+    }
+
+    pub fn select(connection: &mut SqliteConnection, value: &str) -> QueryResult<Ticket> {
+        tickets.filter(ticket.eq(value)).first(connection)
+    }
+
+    pub fn count(connection: &mut SqliteConnection) -> QueryResult<i64> {
+        tickets.count().get_result(connection)
     }
 }
