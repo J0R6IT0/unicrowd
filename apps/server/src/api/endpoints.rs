@@ -52,7 +52,7 @@ async fn validate_ticket(
 
     let ticket = &body.ticket;
     if ticket.is_empty() {
-        return HttpResponse::BadRequest().json(&ValidateTicketResponse {
+        return HttpResponse::Unauthorized().json(&ValidateTicketResponse {
             status: "error".to_string(),
             error: Some("Missing 'ticket' field".to_string()),
         });
